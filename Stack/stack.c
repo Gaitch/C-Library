@@ -1,11 +1,3 @@
-/*
-Bericht:
-ein grosses problem war die undeutliche definierung der Vorgaben.
-Vorallem der letzte punkt intepretierte ich am anfang so als m�sste der 
-Stack selbst die neu initialisierung vornehmen. jedoch waren die testf�lle
-nicht auf diese Implementation ausgelegt.
-*/
-
 #include <stdlib.h>
 #include <stdbool.h>
 #include "stack.h"

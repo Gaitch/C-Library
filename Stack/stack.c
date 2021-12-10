@@ -1,8 +1,8 @@
 /*
 Bericht:
 ein grosses problem war die undeutliche definierung der Vorgaben.
-Vorallem der letzte punkt intepretierte ich am anfang so als müsste der 
-Stack selbst die neu initialisierung vornehmen. jedoch waren die testfälle
+Vorallem der letzte punkt intepretierte ich am anfang so als mï¿½sste der 
+Stack selbst die neu initialisierung vornehmen. jedoch waren die testfï¿½lle
 nicht auf diese Implementation ausgelegt.
 */
 
@@ -10,11 +10,20 @@ nicht auf diese Implementation ausgelegt.
 #include <stdbool.h>
 #include "stack.h"
 
-#define STACK_SIZE 100
+typedef struct 
+{
+	int top = 0;
+	bool ripStack = false;
+	char data[];
+}stack;
 
-char contents[STACK_SIZE];
-bool ripStack = false;
-int top = 0;
+typedef enum
+{
+	success;
+	stackEmpty;
+	stackFull;
+	stackCorrupted
+}errorCode;
 
 void stack_init(void)
 {
@@ -22,7 +31,7 @@ void stack_init(void)
 	ripStack = false;
 }
 
-void stack_push(char c)
+errorCode stack_push(stack* s, char c)
 {
 	if (ripStack == false)
 	{
@@ -31,24 +40,24 @@ void stack_push(char c)
 			(c >= 'a' && c <= 'z') ||
 			(c == ' '))
 		{
-			contents[top] = c;
+			s->data = c;
 		}
 		else
 		{
-			contents[top] = '*';
+			data[top] = '*';
 		}
 		top++;
 	}
 }
 
-char stack_pop(void)
+errorCode stack_pop(void)
 {
 	if (ripStack == false)
 	{
 		if (top > 0 && top < STACK_SIZE)
 		{
 			top--;
-			return contents[top];
+			return data[top];
 		}
 		else
 		{
@@ -66,7 +75,7 @@ char stack_peek(void)
 	}
 	if (top > 0 && top <= STACK_SIZE)
 	{
-		return contents[top - 1];
+		return data[top - 1];
 	}
 	else
 	{
